@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PropertyController extends AbstractController
 {
     /**
-     * PropertyController constructor.
+     * AdminPropertyController constructor.
      */
 
     // En le mettant dans le constructeur on aura accès au service dans touted les méthodes
