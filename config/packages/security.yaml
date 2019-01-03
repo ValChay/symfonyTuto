@@ -1,0 +1,44 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    #permet dindiqué comment va récupérer les user et authentification
+    providers:
+        from_database:
+            entity:
+                class: App\Entity\User
+                property: username
+
+
+#    définis les composants qui vont authentifier les users,
+#    ils vont écouté sur certaines requêtes et effetuer des opérations particulieres
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            # 2 parametre chemin pour se logout et cible pour la redirection
+            logout:
+                path: /logout
+                target: /
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            # check path permet d'indiquer sur quel route se fait la vérification car par défaut elle se fait sur /login_check
+            form_login:
+                check_path: login
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+         # permet de définir les encoders à utiliser suivant les différentes class si on ne veut pas chiffré le mdp on écris plaintext
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+
+
